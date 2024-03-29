@@ -1,4 +1,47 @@
-<p>layout-page works!</p>
+<!-- Elemento Sidenav -->
+<mat-sidenav-container fullscreen>
+  <!-- El '<mat-sidenav>' es el elemento una vez que se abre -->
+  <!-- Usamos la referencia local sidenav -->
+  <mat-sidenav #sidenav mode="push" [ngStyle]="{ width: '250px' }">
+    <mat-toolbar>
+      <span>Menú</span>
+      <span class="spacer"></span>
+      <!-- El método toggle() permite abrir y cerrar el menú -->
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <!-- El ícono 'menu' es el de hamburguesa -->
+        <mat-icon>menu</mat-icon>
+      </button>
+    </mat-toolbar>
 
-<!-- Me muestra las rutas de la ruta hija -->
-<router-outlet></router-outlet>
+    <!--
+      Muestro las opciones del menú.
+      Con el (click)="sidenav.toggle()" cierro o abro
+    -->
+    <mat-nav-list>
+      <mat-list-item
+        *ngFor="let item of sidebarItems"
+        [routerLink]="item.url"
+        (click)="sidenav.toggle()"
+      >
+        <!-- Con el matListItemIcon centro los icon -->
+        <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+        {{ item.label }}
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <!-- El '<mat-toolbar>' es el elemento para abrir el sidenav -->
+  <mat-toolbar color="primary">
+    <button mat-icon-button (click)="sidenav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <span class="spacer"></span>
+    <button mat-button>Logout</button>
+  </mat-toolbar>
+
+  <div class="container p-3">
+    <!-- Me muestra las rutas de la ruta hija -->
+    <router-outlet></router-outlet>
+  </div>
+</mat-sidenav-container>
